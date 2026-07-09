@@ -1,32 +1,11 @@
 const express  = require('express');
+const products = require('./data/products');
 
 const app = express();
 
 app.use(express.json());
 
 const PORT = 3003;
-
-
-const products = [
-  {
-    id: 1,
-    name: "Laptop",
-    price: 1200,
-    category: "Electronics"
-  },
-  {
-    id: 2,
-    name: "Keyboard",
-    price: 50,
-    category: "Accessories"
-  },
-  {
-    id: 3,
-    name: "Mouse",
-    price: 25,
-    category: "Accessories"
-  }
-];
 
 app.get('/', (req, res) => {
     res.send('Welcome to my REST API!');
@@ -46,7 +25,7 @@ app.get('/products/:id', (req, res) => {
     }
 
     res.status(404).json({
-        messge: "Product not found" 
+        message: "Product not found" 
     });
 });
 
@@ -74,3 +53,5 @@ app.post("/products", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+// stopped on the step of making routes inside a separate file and importing them into the server.js file.
