@@ -16,3 +16,5 @@ app.use(userRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+// feature that left is Update(PUT/PATCH)
