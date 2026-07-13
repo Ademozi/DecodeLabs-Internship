@@ -43,8 +43,22 @@ const getUsersById = async (req, res) => {
     }
 };
 
+const deleteUserById = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const user = await User.findByIdAndDelete(id);
+        res.json(user);
+        return;
+    } catch (error) {
+        console.log("error while reading user of id ", id);
+        return res.json(error);
+    }
+};
+
 module.exports = {
     createUser,
     getUsers,
-    getUsersById
+    getUsersById,
+    deleteUserById
 };
