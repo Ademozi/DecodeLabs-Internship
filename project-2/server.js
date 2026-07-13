@@ -11,13 +11,27 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 
-app.post("/users", (req, res) => {
+app.post("/users", async (req, res) => {
     const newUser = new User();
 
     const userEmail = req.body.userEmail;
     const userAge = req.body.userAge;
-    const userActivity = req.body
+    const userActivity = req.body.userActivity;
+    const userCreatedAt = req.body.userCreatedAt;
+
+    newUser.email = userEmail;
+    newUser.age = userAge;
+    newUser.is_active = userActivity; 
+    newUser.created_at = userCreatedAt;
+
+    await newUser.save();
+
+    res.json({
+        message: "the user is saved successfully"
+    });
 });
+// continue the post route and test it 
+// then do the other routes
 
 app.get('/users', async (req, res) => {
     const users = await User.find();
