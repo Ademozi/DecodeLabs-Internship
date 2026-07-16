@@ -11,9 +11,11 @@ Middleware
 ↓
 
 Protected Route
+```
 
 The middleware should
 
+```
 Read Authorization header
 
 ↓
