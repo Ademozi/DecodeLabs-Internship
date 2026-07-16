@@ -102,3 +102,74 @@ Faster ⚡
 Less secure ❌
 
 For learning projects, 10 is a common choice. In production, the appropriate cost depends on your hardware and performance goals.
+
+--- 
+
+we don't say:
+
+```
+Email doesn't exist
+```
+Why?
+
+Because hackers could use that information to discover valid email addresses.
+
+Instead we always return:
+```
+Invalid email or password
+```
+Whether the email is wrong or the password is wrong.
+
+This is a security best practice.
+
+--- 
+
+# Generate JWT
+
+Now comes the exciting part.
+```
+const token = jwt.sign(
+    {
+        userId: user._id
+    },
+    process.env.JWT_SECRET,
+    {
+        expiresIn: "1h"
+    }
+);
+```
+Let's understand each part.
+
+## Payload
+```
+{
+    userId: user._id
+}
+```
+This is the information stored inside the JWT.
+
+Don't store:
+
+password
+email (unless you have a reason)
+sensitive information
+
+The user ID is enough to identify the user.
+
+## Secret
+```
+process.env.JWT_SECRET
+```
+This is your private key from .env.
+
+The server uses it to sign the token.
+
+## Expiration
+```
+expiresIn: "1h"
+```
+After one hour:
+
+The token becomes invalid.
+
+The user must log in again (or use a refresh token in more advanced systems).
