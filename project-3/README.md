@@ -173,3 +173,197 @@ After one hour:
 The token becomes invalid.
 
 The user must log in again (or use a refresh token in more advanced systems).
+
+---
+
+# What is Middleware?
+
+Middleware is a function that runs before your route handler.
+
+Without middleware:
+```
+Client
+   │
+   ▼
+Route
+```
+With middleware:
+```
+Client
+   │
+   ▼
+Middleware
+   │
+   ▼
+Route
+```
+
+# Create the middleware function
+```
+const authMiddleware = (req, res, next) => {
+
+};
+```
+Notice the third parameter:
+```
+next
+```
+This is special.
+
+Calling:
+```
+next();
+```
+means:
+
+"The user passed the security check. Continue to the next function."
+
+# Extract the token
+
+The header is:
+```
+Bearer eyJhbGc...
+```
+We only need:
+```
+eyJhbGc...
+```
+Split the string:
+```
+const token = authHeader.split(" ")[1];
+```
+Let's see how it works.
+
+Before:
+```
+Bearer abc123
+```
+After:
+```
+authHeader.split(" ")
+```
+Result:
+```
+[
+ "Bearer",
+ "abc123"
+]
+```
+So
+```
+[1]
+```
+is
+```
+abc123
+```
+
+---
+---
+# Test
+
+## Step 1: Register a user
+
+Make a POST request:
+
+POST http://localhost:3000/api/auth/register
+
+Body → raw → JSON
+```
+{
+    "email": "john@gmail.com",
+    "password": "123456"
+}
+```
+Expected response:
+```
+{
+    "message": "User registered successfully"
+}
+```
+
+## Step 2: Login
+
+Now make another request:
+
+POST http://localhost:3000/api/auth/login
+
+Body:
+```
+{
+    "email": "john@gmail.com",
+    "password": "123456"
+}
+```
+You should receive something like:
+```
+{
+    "message": "Login successful",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI..."
+}
+```
+Copy the token.
+
+It will be a very long string like:
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....
+
+
+## Step 3: Test WITHOUT the token
+
+Now send:
+
+GET http://localhost:3000/api/auth/profile
+
+Don't add any headers.
+
+Expected response:
+```
+{
+    "message": "Access denied. No token provided."
+}
+```
+
+That means your middleware is working because it blocked the request.
+
+## Step 4: Test WITH the token
+
+Now go to the Headers tab in Postman.
+
+Add this header:
+```
+Key	Value
+Authorization	Bearer YOUR_TOKEN
+```
+For example:
+```
+Key	Value
+Authorization	Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+Notice there is a space between:
+
+Bearer
+
+and
+
+eyJhbGc...
+
+It should look exactly like this:
+
+```
+Authorization: Bearer eyJhbGcOiJIUzI1NiIs...
+```
+
+Then click Send.
+
+You should get something like:
+
+```
+{
+    "message": "Welcome to your profile!",
+    "user": {
+        "userId": "6875..."
+    }
+}
+```
