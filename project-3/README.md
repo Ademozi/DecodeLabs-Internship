@@ -1,3 +1,225 @@
+# 🔐 Secure Authentication System API
+
+A secure RESTful Authentication API built with **Node.js**, **Express.js**, **MongoDB**, and **JWT** as part of the **DecodeLabs Backend Internship – Project 3**.
+
+This project demonstrates how to securely register users, authenticate them using JSON Web Tokens (JWT), and protect API routes with middleware while following backend security best practices.
+
+---
+
+## 🚀 Features
+
+- User Registration
+- Secure Password Hashing with **bcrypt**
+- User Login
+- JWT (JSON Web Token) Authentication
+- Protected Routes using Authentication Middleware
+- MongoDB Database Integration
+- Environment Variable Configuration with `.env`
+- Secure Secret Management
+
+---
+
+## 🛠️ Tech Stack
+
+- Node.js
+- Express.js
+- MongoDB Atlas
+- Mongoose
+- bcrypt
+- JSON Web Token (JWT)
+- dotenv
+
+---
+
+## 📂 Project Structure
+
+```
+project-3/
+│
+├── controllers/
+│   └── authController.js
+│
+├── middleware/
+│   └── authMiddleware.js
+│
+├── models/
+│   └── User.js
+│
+├── routes/
+│   └── authRoutes.js
+│
+├── .env
+├── .gitignore
+├── package.json
+└── server.js
+```
+
+---
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/project-3.git
+```
+
+Go into the project folder:
+
+```bash
+cd project-3
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+PORT=3000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_super_secret_key
+```
+
+Start the server:
+
+```bash
+node server.js
+```
+
+---
+
+## 📌 API Endpoints
+
+### Register User
+
+**POST**
+
+```
+/api/auth/register
+```
+
+Request Body
+
+```json
+{
+  "email": "john@gmail.com",
+  "password": "123456"
+}
+```
+
+---
+
+### Login
+
+**POST**
+
+```
+/api/auth/login
+```
+
+Request Body
+
+```json
+{
+  "email": "john@gmail.com",
+  "password": "123456"
+}
+```
+
+Response
+
+```json
+{
+  "message": "Login successful",
+  "token": "YOUR_JWT_TOKEN"
+}
+```
+
+---
+
+### Protected Route
+
+**GET**
+
+```
+/api/auth/profile
+```
+
+Headers
+
+```
+Authorization: Bearer YOUR_JWT_TOKEN
+```
+
+---
+
+## 🔒 Authentication Flow
+
+1. User registers with an email and password.
+2. The password is securely hashed using **bcrypt** before being stored.
+3. The user logs in with valid credentials.
+4. The server verifies the password.
+5. A signed JWT is generated and returned.
+6. The client includes the JWT in the `Authorization` header.
+7. Authentication middleware verifies the token before allowing access to protected routes.
+
+---
+
+## 🛡️ Security Practices
+
+- Passwords are never stored in plain text.
+- Passwords are hashed using **bcrypt**.
+- JWTs are signed with a secret key stored in `.env`.
+- Protected routes require a valid Bearer Token.
+- Sensitive configuration is excluded from Git using `.gitignore`.
+
+---
+
+## 🧪 Testing
+
+This API can be tested using:
+
+- Postman
+- Thunder Client
+- Insomnia
+
+---
+
+## 📚 Concepts Learned
+
+- REST API Development
+- Authentication vs Authorization
+- Password Hashing
+- JWT Authentication
+- Express Middleware
+- Environment Variables
+- Secure API Design
+- MongoDB Integration
+
+---
+
+## 🎯 Internship
+
+This project was completed as **Project 3** of the **DecodeLabs Backend Internship**, focusing on implementing secure authentication using modern backend development practices.
+
+---
+
+## 📄 License
+
+This project is intended for educational purposes as part of the DecodeLabs Backend Internship.
+
+---
+---
+---
+
+# My Notes:
+
 # Middleware
 
 Middleware sits between the client and the route.
